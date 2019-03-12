@@ -7,6 +7,8 @@ import android.util.Log;
  * Created by staja on 10/20/2018.
  */
 
+// GPSMaths() is a class with fixed properties for storing details regarding each sculpture and
+// methods for calculating the piece that should currently be playing.
 public class GPSMaths {
 
     private String TAG = GPSMaths.class.getName();
@@ -32,7 +34,11 @@ public class GPSMaths {
             "m04.mp3",
             new double[] {39.042758},
             new double[] {-94.579753},
-            new double[] {57.912},
+            // after initial real world testing, Christina and I thought the radius for Ferment was
+            // way too long, encompassing other nearby structures and preventing the Promenade upto
+            // the central garden. Reduced the size from 57m to 40m. May be too much of an over-
+            // correction, will check with Christina.
+            new double[] {40.000},
             0);
 
 
@@ -89,6 +95,8 @@ public class GPSMaths {
 
     }
 
+    // calculate_position() calculate the distance between two GPS coordinates. Math comes from
+    // https://www.movable-type.co.uk/scripts/latlong.html
     public double calculate_position(double currentLon, double currentLat,
                                       double targetLat, double targetLon) {
         Log.i(TAG, "calculate_position(" + Double.toString(currentLat) + ", " + Double.toString(currentLon) + " --- " + Double.toString(targetLat) + ", " + Double.toString(targetLon));
@@ -105,6 +113,8 @@ public class GPSMaths {
         return d;
     }
 
+    // playWhat() takes in the current user GPS coordiates and returns the Sculpture that they are
+    // within trigger range. If not in range of anything, returns the Promenade.
     public Sculpture playWhat(double currentLat, double currentLon) {
         if (calculate_position(currentLat, currentLon,
                 shuttlecockN.getLat()[0], shuttlecockN.getLon()[0]) <= shuttlecockN.getTrigger()[0] &&

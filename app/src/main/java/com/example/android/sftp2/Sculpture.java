@@ -4,6 +4,8 @@ package com.example.android.sftp2;
  * Created by staja on 10/20/2018.
  */
 
+// a class representing each sculpture. Used as data structure design to simplify calls to
+// complete data sets.
 public class Sculpture {
 
     private String name;
